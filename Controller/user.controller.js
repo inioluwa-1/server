@@ -1,8 +1,9 @@
 const cloudinary = require('cloudinary').v2;
+require('dotenv').config();
 cloudinary.config({
-    cloud_name: process.env.cloud_name,
-    api_key: process.env.api_key,
-    api_secret: process.env.api_secret
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
 });
 
 const uploadFile = (req, res) => {
@@ -12,14 +13,13 @@ const uploadFile = (req, res) => {
             // let mediaUpload = new userDB(media)
             // mediaUpload.save()
             // .then(()=>{
-                res.send(result.secure_url)
-                console.log(result.secure_url)
+            res.send(result.secure_url)
+            console.log(result.secure_url)
             // })
 
         } else {
             console.log(err);
         }
-
     })
 }
 
