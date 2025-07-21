@@ -6,24 +6,27 @@ cloudinary.config({
     api_secret: process.env.API_SECRET
 });
 
+const uploadedImages = []; // Store image URLs in memory
+
 const uploadFile = (req, res) => {
     let media = req.body.file;
     cloudinary.uploader.upload(media, (err, result) => {
         if (result) {
-            // let mediaUpload = new userDB(media)
-            // mediaUpload.save()
-            // .then(()=>{
-            res.send(result.secure_url)
-            console.log(result.secure_url)
-            // })
-
+            uploadedImages.unshift(result.secure_url); // Save the URL
+            res.send({ url: result.secure_url }); // Send as object for frontend
+            console.log(result.secure_url);
         } else {
             console.log(err);
+            res.status(500).send('Upload failed');
         }
     })
 }
 
+const getImages = (req, res) => {
+    res.json(uploadedImages); // Return all image URLs
+}
 
 module.exports = {
     uploadFile,
+    getImages
 }
