@@ -10,7 +10,7 @@ const uploadedImages = []; // Store image URLs in memory
 
 const uploadFile = (req, res) => {
     let media = req.body.file;
-    cloudinary.uploader.upload(media, (err, result) => {
+    cloudinary.uploader.upload(media, { resource_type: "auto" }, (err, result) => {
         if (result) {
             uploadedImages.unshift(result.secure_url); // Save the URL
             res.send({ url: result.secure_url }); // Send as object for frontend
